@@ -18,6 +18,10 @@ function getCompleted() {
 function addTodo(description: string) {
   todos.push({ description, done: false });
 }
+
+function toggleDone(todo: any) {
+  todo.done = !todo.done;
+}
 </script>
 
 <template>
@@ -26,6 +30,9 @@ function addTodo(description: string) {
   <div v-for="todo in todos">
     <div class="todo-description">{{ todo.description }}</div>
     <div class="todo-done">{{ todo.done }}</div>
+    <button class="todo-toggle-done-button" @click="toggleDone(todo)">
+      done/undone
+    </button>
   </div>
   <input class="todo-description-input" type="text" v-model="description" />
   <button class="add-todo-button" @click="addTodo(description)">add</button>
