@@ -1,54 +1,35 @@
 <script setup lang="ts">
 import { inject, onMounted, reactive } from "vue";
+import TodoList from "./entity/TodoList";
 import TodosGateway from "./infra/gateway/TodosGateway";
 
-const todos: any = reactive([]);
+const todoList: any = reactive(new TodoList());
 const description = "";
-
-function getTotal() {
-  return todos.length;
-}
-
-function getCompleted() {
-  const total = getTotal();
-  if (total === 0) return 0;
-  const completed = todos.filter((todo: any) => todo.done).length;
-  return Math.round((completed / total) * 100);
-}
-
-function addTodo(description: string) {
-  if (todos.some((todo: any) => todo.description === description)) return;
-  todos.push({ description, done: false });
-}
-
-function toggleDone(todo: any) {
-  todo.done = !todo.done;
-}
-
-function deleteTodo(todo: any) {
-  todos.splice(todos.indexOf(todo), 1);
-}
 
 onMounted(async () => {
   const todosGateway = inject("todosGateway") as TodosGateway;
   const todosData = await todosGateway.getTodos();
-  todos.push(...todosData);
+  todoList.addTodos(todosData);
 });
 </script>
 
 <template>
-  <div class="total">Total: {{ getTotal() }}</div>
-  <div class="completed">Completed: {{ getCompleted() }}%</div>
-  <div v-for="todo in todos">
+  <div class="total">Total: {{ todoList.getTotal() }}</div>
+  <div class="completed">Completed: {{ todoList.getCompleted() }}%</div>
+  <div v-for="todo in todoList.todos">
     <div class="todo-description">{{ todo.description }}</div>
     <div class="todo-done">{{ todo.done }}</div>
-    <button class="todo-toggle-done-button" @click="toggleDone(todo)">
+    <button class="todo-toggle-done-button" @click="todo.toggleDone()">
       done/undone
     </button>
-    <button class="todo-delete-button" @click="deleteTodo(todo)">delete</button>
+    <button class="todo-delete-button" @click="todoList.deleteTodo(todo)">
+      delete
+    </button>
   </div>
   <input class="todo-description-input" type="text" v-model="description" />
-  <button class="add-todo-button" @click="addTodo(description)">add</button>
+  <button class="add-todo-button" @click="todoList.addTodo(description)">
+    add
+  </button>
 </template>
 
 <style scoped></style>
