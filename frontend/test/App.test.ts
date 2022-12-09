@@ -3,5 +3,6 @@ import AppVue from "../src/App.vue";
 
 test("Should test the todo list", function () {
   const wrapper = mount(AppVue, {});
-  console.log(wrapper.html());
+  expect(wrapper.get(".total").text()).toBe("Total: 3");
+  expect(wrapper.get(".completed").text()).toBe("Completed: 33%");
 });
