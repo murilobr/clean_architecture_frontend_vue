@@ -15,4 +15,7 @@ test("Should test the todo list", async function () {
   await wrapper.findAll(".todo-toggle-done-button").at(0)?.trigger("click");
   expect(wrapper.findAll(".todo-done").at(0)?.text()).toBe("true");
   expect(wrapper.get(".completed").text()).toBe("Completed: 50%");
+  await wrapper.findAll(".todo-delete-button").at(0)?.trigger("click");
+  expect(wrapper.get(".total").text()).toBe("Total: 1");
+  expect(wrapper.get(".completed").text()).toBe("Completed: 0%");
 });
