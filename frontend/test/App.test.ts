@@ -1,5 +1,6 @@
 import { mount } from "@vue/test-utils";
 import AppVue from "../src/App.vue";
+import TodosGateway from "../src/infra/gateway/TodosGateway";
 
 function sleep(time: number) {
   return new Promise((resolve) => {
@@ -10,14 +11,46 @@ function sleep(time: number) {
 }
 
 test("Should test an empty todo list", async function () {
-  const wrapper = mount(AppVue, {});
+  const todosGateway: TodosGateway = {
+    async getTodos(): Promise<any> {
+      return [
+        {
+          description: "My first todo",
+          done: true,
+        },
+      ];
+    },
+  };
+  const wrapper = mount(AppVue, {
+    global: {
+      provide: {
+        todosGateway,
+      },
+    },
+  });
   await sleep(100);
   expect(wrapper.get(".total").text()).toBe("Total: 1");
   expect(wrapper.get(".completed").text()).toBe("Completed: 100%");
 });
 
 test("Should test the todo list", async function () {
-  const wrapper = mount(AppVue, {});
+  const todosGateway: TodosGateway = {
+    async getTodos(): Promise<any> {
+      return [
+        {
+          description: "My first todo",
+          done: true,
+        },
+      ];
+    },
+  };
+  const wrapper = mount(AppVue, {
+    global: {
+      provide: {
+        todosGateway,
+      },
+    },
+  });
   await sleep(100);
   await wrapper.get(".todo-description-input").setValue("A");
   await wrapper.get(".add-todo-button").trigger("click");
@@ -37,7 +70,23 @@ test("Should test the todo list", async function () {
 });
 
 test("Should not let insert duplicated todo", async function () {
-  const wrapper = mount(AppVue, {});
+  const todosGateway: TodosGateway = {
+    async getTodos(): Promise<any> {
+      return [
+        {
+          description: "My first todo",
+          done: true,
+        },
+      ];
+    },
+  };
+  const wrapper = mount(AppVue, {
+    global: {
+      provide: {
+        todosGateway,
+      },
+    },
+  });
   await sleep(100);
   await wrapper.get(".todo-description-input").setValue("A");
   await wrapper.get(".add-todo-button").trigger("click");
