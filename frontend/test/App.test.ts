@@ -12,4 +12,7 @@ test("Should test the todo list", async function () {
   await wrapper.get(".todo-description-input").setValue("B");
   await wrapper.get(".add-todo-button").trigger("click");
   expect(wrapper.get(".total").text()).toBe("Total: 2");
+  await wrapper.findAll(".todo-toggle-done-button").at(0)?.trigger("click");
+  expect(wrapper.findAll(".todo-done").at(0)?.text()).toBe("true");
+  expect(wrapper.get(".completed").text()).toBe("Completed: 50%");
 });
