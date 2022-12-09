@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
 import axios from "axios";
+import TodosGatewayHttp from "./infra/gateway/TodosGatewayHttp";
 
 const todos: any = reactive([]);
 const description = "";
@@ -30,8 +31,8 @@ function deleteTodo(todo: any) {
 }
 
 onMounted(async () => {
-  const response = await axios.get("http://localhost:3000/todos");
-  const todosData = response.data;
+  const todosGateway = new TodosGatewayHttp();
+  const todosData = await todosGateway.getTodos();
   todos.push(...todosData);
 });
 </script>
