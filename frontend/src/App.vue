@@ -17,6 +17,7 @@ function getCompleted() {
 }
 
 function addTodo(description: string) {
+  if (todos.some((todo: any) => todo.description === description)) return;
   todos.push({ description, done: false });
 }
 
