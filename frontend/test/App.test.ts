@@ -1,14 +1,24 @@
 import { mount } from "@vue/test-utils";
 import AppVue from "../src/App.vue";
 
+function sleep(time: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+}
+
 test("Should test an empty todo list", async function () {
   const wrapper = mount(AppVue, {});
+  await sleep(100);
   expect(wrapper.get(".total").text()).toBe("Total: 1");
   expect(wrapper.get(".completed").text()).toBe("Completed: 100%");
 });
 
 test("Should test the todo list", async function () {
   const wrapper = mount(AppVue, {});
+  await sleep(100);
   await wrapper.get(".todo-description-input").setValue("A");
   await wrapper.get(".add-todo-button").trigger("click");
   expect(wrapper.get(".total").text()).toBe("Total: 2");
@@ -28,6 +38,7 @@ test("Should test the todo list", async function () {
 
 test("Should not let insert duplicated todo", async function () {
   const wrapper = mount(AppVue, {});
+  await sleep(100);
   await wrapper.get(".todo-description-input").setValue("A");
   await wrapper.get(".add-todo-button").trigger("click");
   await wrapper.get(".todo-description-input").setValue("A");
