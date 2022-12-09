@@ -13,7 +13,6 @@ function getCompleted() {
   const total = getTotal();
   if (total === 0) return 0;
   const completed = todos.filter((todo: any) => todo.done).length;
-  console.log(completed, total);
   return Math.round((completed / total) * 100);
 }
 
