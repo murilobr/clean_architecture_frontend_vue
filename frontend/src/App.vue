@@ -22,6 +22,10 @@ function addTodo(description: string) {
 function toggleDone(todo: any) {
   todo.done = !todo.done;
 }
+
+function deleteTodo(todo: any) {
+  todos.splice(todos.indexOf(todo), 1);
+}
 </script>
 
 <template>
@@ -33,6 +37,7 @@ function toggleDone(todo: any) {
     <button class="todo-toggle-done-button" @click="toggleDone(todo)">
       done/undone
     </button>
+    <button class="todo-delete-button" @click="deleteTodo(todo)">delete</button>
   </div>
   <input class="todo-description-input" type="text" v-model="description" />
   <button class="add-todo-button" @click="addTodo(description)">add</button>
