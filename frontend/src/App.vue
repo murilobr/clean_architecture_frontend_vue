@@ -23,6 +23,10 @@ function addTodo(description: string) {
 <template>
   <div class="total">Total: {{ getTotal() }}</div>
   <div class="completed">Completed: {{ getCompleted() }}%</div>
+  <div v-for="todo in todos">
+    <div class="todo-description">{{ todo.description }}</div>
+    <div class="todo-done">{{ todo.done }}</div>
+  </div>
   <input class="todo-description-input" type="text" v-model="description" />
   <button class="add-todo-button" @click="addTodo(description)">add</button>
 </template>
