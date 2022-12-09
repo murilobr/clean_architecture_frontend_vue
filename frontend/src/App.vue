@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
+import axios from "axios";
 
 const todos: any = reactive([]);
 const description = "";
@@ -28,6 +29,12 @@ function toggleDone(todo: any) {
 function deleteTodo(todo: any) {
   todos.splice(todos.indexOf(todo), 1);
 }
+
+onMounted(async () => {
+  const response = await axios.get("http://localhost:3000/todos");
+  const todosData = response.data;
+  todos.push(...todosData);
+});
 </script>
 
 <template>
