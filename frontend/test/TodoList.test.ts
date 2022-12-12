@@ -13,13 +13,6 @@ test("Should create a todo list with one todo", function () {
   expect(todoList.getCompleted()).toBe(0);
 });
 
-test("Should create a todo list with one todo", function () {
-  const todoList = new TodoList();
-  todoList.addTodo("A");
-  expect(todoList.getTotal()).toBe(1);
-  expect(todoList.getCompleted()).toBe(0);
-});
-
 test("Should create a todo list with two todos, one as done", function () {
   const todoList = new TodoList();
   todoList.addTodo("A");
